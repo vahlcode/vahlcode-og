@@ -44,7 +44,6 @@
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
-    "@resvg/resvg-js": ">=2.0.0",
     "react": ">=18",
     "satori": ">=0.10.0"
   },
@@ -54,7 +53,6 @@
     }
   },
   "devDependencies": {
-    "@resvg/resvg-js": "^2.6.2",
     "@types/node": "^25.2.3",
     "@types/react": "^18.2.0",
     "@types/sharp": "^0.31.1",
@@ -81,5 +79,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/vahlcode/vahlcode-og.git"
+  },
+  "dependencies": {
+    "@resvg/resvg-wasm": "^2.6.2"
   }
 }

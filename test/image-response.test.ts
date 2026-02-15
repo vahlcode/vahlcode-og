@@ -6,14 +6,19 @@ vi.mock('satori', () => ({
     default: vi.fn().mockResolvedValue('<svg>mock</svg>'),
 }))
 
-// Mock @resvg/resvg-js
-const mockAsPng = vi.fn().mockReturnValue(new Uint8Array([137, 80, 78, 71])) // PNG magic bytes
-const mockRender = vi.fn().mockReturnValue({ asPng: mockAsPng })
+vi.mock('@resvg/resvg-wasm', () => {
+    return {
+        initWasm: vi.fn(),
+        Resvg: vi.fn().mockImplementation(() => ({
+            render: vi.fn().mockReturnValue({
+                asPng: vi.fn().mockReturnValue(new Uint8Array([137, 80, 78, 71])),
+            }),
+        })),
+    }
+})
 
-vi.mock('@resvg/resvg-js', () => ({
-    Resvg: vi.fn().mockImplementation(() => ({
-        render: mockRender,
-    })),
+vi.mock('../src/resvg-wasm', () => ({
+    resvgWasm: 'mock-base64-string',
 }))
 
 // Mock the font module to avoid real fetch calls

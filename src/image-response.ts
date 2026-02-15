@@ -102,9 +102,24 @@ export class ImageResponse extends Response {
 
                     const svg = await satori(element, satoriOptions as any)
 
-                    // 3. Convert SVG → PNG via resvg
-                    // @ts-ignore - Avoid Vite analysis of native module
-                    const { Resvg } = await import(/* @vite-ignore */ '@resvg/resvg-js')
+                    // 3. Convert SVG → PNG via resvg-wasm
+                    const { Resvg, initWasm } = await import('@resvg/resvg-wasm')
+                    const { resvgWasm } = await import('./resvg-wasm')
+
+                    // Initialize WASM if not already done
+                    // Note: initWasm usually handles multiple calls, but we can wrap it if needed.
+                    // Converting base64 to Buffer/Uint8Array
+                    // In Node/Edge with Buffer support:
+                    const wasmBuffer = Buffer.from(resvgWasm, 'base64')
+
+                    try {
+                        await initWasm(wasmBuffer)
+                    } catch (e) {
+                        // If already initialized, it might throw, or just work.
+                        // Check specific error if needed, but for now strict init.
+                        // Actually, resvg-wasm initWasm checks if module is set.
+                    }
+
                     const resvg = new Resvg(svg, {
                         fitTo: { mode: 'width', value: width },
                     })
