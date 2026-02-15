@@ -103,7 +103,8 @@ export class ImageResponse extends Response {
                     const svg = await satori(element, satoriOptions as any)
 
                     // 3. Convert SVG → PNG via resvg
-                    const { Resvg } = await import('@resvg/resvg-js')
+                    // @ts-ignore - Avoid Vite analysis of native module
+                    const { Resvg } = await import(/* @vite-ignore */ '@resvg/resvg-js')
                     const resvg = new Resvg(svg, {
                         fitTo: { mode: 'width', value: width },
                     })
