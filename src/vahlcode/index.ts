@@ -1,52 +1,42 @@
 import { ImageResponse } from '../image-response'
-import type { CreateOgRouteOptions, OgRenderFunction } from '../types'
+import type { CreateOgImageOptions, OgRenderFunction } from '../types'
 
 /**
- * Create an Open Graph image route handler for TanStack Start.
+ * Create an Open Graph image route configuration for TanStack Start.
  *
- * This is a convenience wrapper that creates a route configuration object
- * compatible with TanStack Start's `createFileRoute` handler pattern.
- * It automatically handles font loading, rendering, caching headers,
- * and returns a properly-formatted `ImageResponse`.
+ * This function returns a route configuration object that should be passed
+ * to `createFileRoute`. It automatically handles font loading, rendering,
+ * and caching headers.
  *
- * @param path - The route path (e.g. `"/og"`)
  * @param render - An async function that receives the request context and returns a JSX element
  * @param options - Image dimensions, fonts, and caching configuration
- * @returns A route configuration object with a `GET` handler
+ * @returns A route configuration object compatible with `createFileRoute`
  *
  * @example
  * ```tsx
- * import { createOgRoute } from '@vahlcode/og/tanstack'
+ * import { createFileRoute } from '@tanstack/react-router'
+ * import { createOgImage } from '@vahlcode/og/tanstack'
  *
- * export const Route = createOgRoute('/og', async ({ request }) => {
- *   const url = new URL(request.url)
- *   const title = url.searchParams.get('title') ?? 'Hello World'
+ * export const Route = createFileRoute('/og')(
+ *   createOgImage(async ({ request }) => {
+ *     const url = new URL(request.url)
+ *     const title = url.searchParams.get('title') ?? 'Hello World'
  *
- *   return (
- *     <div style={{
- *       display: 'flex',
- *       fontSize: 72,
- *       color: 'white',
- *       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
- *       width: '100%',
- *       height: '100%',
- *       alignItems: 'center',
- *       justifyContent: 'center',
- *     }}>
- *       {title}
- *     </div>
- *   )
- * }, {
- *   width: 1200,
- *   height: 630,
- *   cacheTTL: 3600,
- * })
+ *     return (
+ *       <div style={{ fontSize: 72 }}>
+ *         {title}
+ *       </div>
+ *     )
+ *   }, {
+ *     width: 1200,
+ *     height: 630,
+ *   })
+ * )
  * ```
  */
-export function createOgRoute(
-    _path: string,
+export function createOgImage(
     render: OgRenderFunction,
-    options: CreateOgRouteOptions = {}
+    options: CreateOgImageOptions = {}
 ) {
     const { cacheTTL, ...imageOptions } = options
 

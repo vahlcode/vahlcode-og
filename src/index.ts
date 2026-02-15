@@ -16,6 +16,6 @@ export type {
     FetchImageOptions,
     LoadGoogleFontOptions,
     CacheOptions,
-    CreateOgRouteOptions,
+    CreateOgImageOptions,
     OgRenderFunction,
 } from './types'

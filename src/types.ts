@@ -74,13 +74,13 @@ export interface CacheOptions {
 /**
  * Options for {@link createOgRoute}.
  */
-export interface CreateOgRouteOptions extends ImageResponseOptions {
+export interface CreateOgImageOptions extends ImageResponseOptions {
     /** Server-side cache TTL in seconds. Sets `Cache-Control: public, max-age=<cacheTTL>`. */
     cacheTTL?: number
 }
 
 /**
- * Render function signature for {@link createOgRoute}.
+ * Render function signature for {@link createOgImage}.
  */
 export type OgRenderFunction = (context: {
     request: Request

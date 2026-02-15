@@ -55,25 +55,20 @@ export async function GET() {
 
 ```tsx
 import { createFileRoute } from '@tanstack/react-router'
-import { ImageResponse } from '@vahlcode/og'
+import { createOgImage } from '@vahlcode/og/tanstack'
 
-export const Route = createFileRoute('/og')({
-  component: () => null,
-  server: {
-    handlers: {
-      GET: async ({ request }) => {
-        const url = new URL(request.url)
-        const title = url.searchParams.get('title') ?? 'My App'
+export const Route = createFileRoute('/og')(
+  createOgImage(async ({ request }) => {
+    const url = new URL(request.url)
+    const title = url.searchParams.get('title') ?? 'My App'
 
-        return new ImageResponse(
-          <div style={{ display: 'flex', fontSize: 72, color: 'white', background: '#111' }}>
-            {title}
-          </div>
-        )
-      },
-    },
-  },
-})
+    return new ImageResponse(
+      <div style={{ display: 'flex', fontSize: 72, color: 'white', background: '#111' }}>
+        {title}
+      </div>
+    )
+  })
+)
 ```
 
 ### Comparison with `next/og`
@@ -176,31 +171,34 @@ const avatar = await fetchImage('https://example.com/avatar.jpg', {
 
 ---
 
-### `createOgRoute(path, render, options?)` — TanStack Start
+### `createOgImage(render, options?)` — TanStack Start helper
 
 ```ts
-import { createOgRoute } from '@vahlcode/og/tanstack'
+import { createOgImage } from '@vahlcode/og/tanstack'
 ```
 
-Convenience wrapper that creates a TanStack Start route configuration with a `GET` handler.
+Helper that generates a route configuration for `createFileRoute`.
 
 ```tsx
-import { createOgRoute } from '@vahlcode/og/tanstack'
+import { createFileRoute } from '@tanstack/react-router'
+import { createOgImage } from '@vahlcode/og/tanstack'
 
-export const Route = createOgRoute('/og', async ({ request }) => {
-  const url = new URL(request.url)
-  const title = url.searchParams.get('title') ?? 'Default'
+export const Route = createFileRoute('/og')(
+  createOgImage(async ({ request }) => {
+    const url = new URL(request.url)
+    const title = url.searchParams.get('title') ?? 'Default'
 
-  return (
-    <div style={{ display: 'flex', fontSize: 72,  color: 'white', background: '#111' }}>
-      {title}
-    </div>
-  )
-}, {
-  width: 1200,
-  height: 630,
-  cacheTTL: 60 * 60, // 1 hour
-})
+    return (
+      <div style={{ display: 'flex', fontSize: 72,  color: 'white', background: '#111' }}>
+        {title}
+      </div>
+    )
+  }, {
+    width: 1200,
+    height: 630,
+    cacheTTL: 60 * 60, // 1 hour
+  })
+)
 ```
 
 ---
