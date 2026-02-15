@@ -1,4 +1,4 @@
-# @tanstack/og
+# @vahlcode/og
 
 **Generate dynamic Open Graph images** with a `next/og`-style developer experience — built for TanStack Start and any Web-standard runtime.
 
