@@ -1,0 +1,85 @@
+{
+  "name": "@vahlcode/og",
+  "version": "0.1.0",
+  "description": "Generate dynamic Open Graph images with a next/og-style DX for TanStack Start and any edge runtime.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./tanstack": {
+      "import": {
+        "types": "./dist/vahlcode/index.d.ts",
+        "default": "./dist/vahlcode/index.js"
+      },
+      "require": {
+        "types": "./dist/vahlcode/index.d.cts",
+        "default": "./dist/vahlcode/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "./node_modules/.bin/tsup",
+    "dev": "./node_modules/.bin/tsup --watch",
+    "test": "./node_modules/.bin/vitest run",
+    "test:watch": "./node_modules/.bin/vitest",
+    "test:coverage": "./node_modules/.bin/vitest run --coverage",
+    "typecheck": "./node_modules/.bin/tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "@resvg/resvg-js": ">=2.0.0",
+    "react": ">=18",
+    "satori": ">=0.10.0"
+  },
+  "peerDependenciesMeta": {
+    "sharp": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@types/node": "^25.2.3",
+    "@types/react": "^18.2.0",
+    "@types/sharp": "^0.31.1",
+    "react": "^18.2.0",
+    "satori": "^0.12.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "og",
+    "open-graph",
+    "og-image",
+    "tanstack",
+    "tanstack-start",
+    "satori",
+    "image-generation",
+    "social-card"
+  ],
+  "author": "Valentine Elum <https://github.com/vahlcode>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vahlcode/vahlcode-og.git"
+  }
+}
