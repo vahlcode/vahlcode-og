@@ -224,6 +224,37 @@ cache.get('key') // ArrayBuffer | undefined
 | `react` | JSX types | Peer dependency |
 | `sharp` | Image resizing | Optional peer dependency |
 
+
+## Troubleshooting
+
+### Vite Error: `No loader is configured for ".node" files`
+
+If you see an error related to `@resvg/resvg-js` and `.node` files, it's because Vite is trying to bundle the native Node.js bindings. You must exclude it from optimization in your Vite config.
+
+**For TanStack Start (`app.config.ts`):**
+
+```ts
+import { defineConfig } from '@tanstack/start/config'
+
+export default defineConfig({
+  vite: {
+    optimizeDeps: {
+      exclude: ['@resvg/resvg-js']
+    }
+  }
+})
+```
+
+**For standard Vite (`vite.config.ts`):**
+
+```ts
+export default defineConfig({
+  optimizeDeps: {
+    exclude: ['@resvg/resvg-js']
+  }
+})
+```
+
 ## Contributing
 
 Contributions are welcome! Please read our [Contributing Guide](./CONTRIBUTING.md) for details.
